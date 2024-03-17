@@ -40,7 +40,17 @@ public class UserController {
 	public String login() {
 		return "login";
 	}
-	
+
+	@GetMapping("/check")
+    public String check() {
+        return "check-appointments"; 
+    }
+
+    @GetMapping("/newch")
+    public String newch() {
+        return "add-appointment";
+	}
+
 	@GetMapping("user-page")
 	public String userPage (Model model, Principal principal) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
@@ -56,3 +66,4 @@ public class UserController {
 	}
 
 }
+
