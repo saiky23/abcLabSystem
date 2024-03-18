@@ -11,17 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import admin_user.dto.AppointmentDto;
 import admin_user.dto.UserDto;
+import admin_user.service.AppointmentService;
 import admin_user.service.UserService;
 
 @Controller
-public class UserController {
+public class MainController {
 	
 	@Autowired
 	UserDetailsService userDetailsService;
 	
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AppointmentService appointmentService;
+
 	
 	//registration
 	@GetMapping("/registration")
@@ -33,7 +39,7 @@ public class UserController {
 	public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
 		userService.save(userDto);
 		model.addAttribute("message", "Registered Successfuly!");
-		return "register";
+		return "login";
 	}
 	
 	@GetMapping("/login")
@@ -47,8 +53,20 @@ public class UserController {
     }
 
     @GetMapping("/newch")
-    public String newch() {
+    public String newch(@ModelAttribute("appointment") AppointmentDto appointmentDto) {
         return "add-appointment";
+	}
+
+	@PostMapping("/save-appoinment")
+	public String saveAppointment(@ModelAttribute("appointment") AppointmentDto appointmentDto, Model model) {
+		appointmentService.save(appointmentDto);
+		model.addAttribute("message", "Appoinment Saved Successfuly!");
+		return "payment";
+	}
+
+	@GetMapping("/payment")
+    public String payment() {
+        return "payment";
 	}
 
 	@GetMapping("user-page")
